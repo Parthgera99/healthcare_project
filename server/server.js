@@ -2,6 +2,8 @@ const express = require("express")
 const connectDb = require("./config/dbConnection");
 const errorHandler = require("./middlewares/errorHandler");
 const cors = require("cors");
+const hbs = require("hbs");
+const path = require("path");
 
 //env file config
 const dotenv = require("dotenv");
@@ -17,8 +19,27 @@ app.use(express.json());
 
 app.use(errorHandler);
 
+app.set('view engine' ,'hbs');
+
 app.get("/", (req, res) => {
     res.send("working perfectly!")
+})
+
+hbs.registerPartials(path.join(__dirname, '/views/partials'));
+
+app.get("/user",(req,res)=>{
+    res.render("user",{
+        users: [
+            { username: "Parth", Age: "20", subject: "Maths" },
+            { username: "Aarav", Age: "23", subject: "Science" },
+            { username: "Ishita", Age: "19", subject: "History" }
+        ]
+    })
+})
+
+
+app.get("/home",(req,res)=>{
+    res.render("home",{})
 })
 
 app.listen(port, () => {
