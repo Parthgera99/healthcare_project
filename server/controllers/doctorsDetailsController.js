@@ -34,4 +34,34 @@ const registerDoctor = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { registerDoctor };
+const deleteDoctor = asyncHandler(async (req, res) => {
+    const { email } = req.params; // Get the email from the request parameters
+
+    // Find the doctor by email and delete
+    const doctor = await Doctor.findOneAndDelete({ email });
+    if (!doctor) {
+        return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    res.status(200).json({ message: "Doctor deleted successfully" });
+});
+
+
+
+const getAllDoctors = asyncHandler(async (req, res) => {
+    const doctors = await Doctor.find();
+    res.status(200).json(doctors);
+});
+
+const getDoctorByEmail = asyncHandler(async (req, res) => {
+    const {email} = req.params;
+    const doctor = await Doctor.findOne({email});
+    if (!doctor) {
+        res.status(404);
+        throw new Error("Doctor not found");
+    }
+    res.status(200).json(doctor);
+});
+
+
+module.exports = { registerDoctor, getAllDoctors, getDoctorByEmail, deleteDoctor  };
