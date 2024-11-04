@@ -25,6 +25,8 @@ app.get("/", (req, res) => {
     res.send("working perfectly!")
 })
 
+app.use('/api/register', require("./routes/userRoutes"));
+
 hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
 app.get("/user",(req,res)=>{
