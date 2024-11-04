@@ -27,7 +27,6 @@ app.get("/", (req, res) => {
 
 app.use('/api/register', require("./routes/userRoutes"));
 app.use('/api/doctor', require("./routes/doctorRoutes"));
-app.delete('/api/doctor/:email', require("./routes/doctorRoutes"));
 
 hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
